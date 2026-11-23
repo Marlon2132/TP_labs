@@ -8,216 +8,382 @@
 </head>
 <body>
 
-    <header class="app-header">
-        <div class="logo">АИС «Торжества»</div>
-        <nav class="main-nav">
-            <a href="#home" class="nav-link">Главная</a>
-            <a href="#booking" class="nav-link">Бронирование</a>
-            <a href="#courier" class="nav-link">Доставка</a>
-            <a href="#admin" class="nav-link">Админ-панель</a>
-            <a href="#login" class="nav-link btn-login">Войти</a>
-        </nav>
-    </header>
+<header class="app-header">
+    <div class="logo">АИС «Торжества»</div>
+    <nav class="main-nav" id="main-nav">
+        <a href="#home" class="nav-link" data-nav="home">Главная</a>
+        <a href="#booking" class="nav-link" data-nav="booking">Бронирование</a>
+        <a href="#courier" class="nav-link" data-nav="courier" id="nav-courier" hidden>Доставка</a>
+        <a href="#admin" class="nav-link" data-nav="admin" id="nav-admin" hidden>Админ-панель</a>
+        <a href="#login" class="nav-link btn-login" id="nav-auth" data-nav="login">Войти</a>
+    </nav>
+    <div class="user-info" id="user-info"></div>
+</header>
 
-    <main class="app-main">
+<main class="app-main">
 
-        <section id="home" class="screen active">
-            <div class="annotation note-right">Главный экран с поиском и фильтрацией</div>
-            <h1>Организация свадеб и корпоративов</h1>
-            
-            <div class="search-panel">
-                <h2>Поиск зала</h2>
-                <form class="wireframe-form">
-                    <div class="form-group">
-                        <label for="search-date">Дата торжества:</label>
-                        <input type="date" id="search-date">
-                        <span class="hint">*Бронирование доступно не ранее чем через 3 дня</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="search-guests">Количество гостей:</label>
-                        <input type="number" id="search-guests" value="10">
-                    </div>
-                    <div class="form-group">
-                        <label for="search-hall">Тип зала:</label>
-                        <select id="search-hall">
-                            <option>Все залы</option>
-                            <option>Банкетный зал</option>
-                            <option>Летняя веранда</option>
-                        </select>
-                    </div>
-                    <button type="button" class="btn btn-secondary">Сортировать по цене ⬇</button>
-                    <button type="button" class="btn btn-secondary">Фильтр по оформлению</button>
-                    <button type="button" class="btn btn-primary" onclick="window.location.hash='#booking'">Найти и Забронировать ➔</button>
-                </form>
-            </div>
+    <!-- ==================== ГЛАВНАЯ ==================== -->
+    <section id="home" class="screen active">
+        <h1>Организация свадеб и корпоративов</h1>
 
-            <div class="results-list">
-                <h3>Доступные залы</h3>
-                <div class="card">
-                    <h4>Банкетный зал «Ривьера»</h4>
-                    <p>Вместимость: до 50 чел. | Оформление: Дизайнерское</p>
-                    <button class="btn btn-primary">Забронировать</button>
+        <form id="search-form" class="search-panel wireframe-form">
+            <h2>Поиск, фильтрация и сортировка</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="search-date-from">Дата торжества (с):</label>
+                    <input type="date" id="search-date-from" name="bookingDateFrom">
                 </div>
-                <div class="card">
-                    <h4>Ресторан «Времена года»</h4>
-                    <p>Вместимость: до 30 чел. | Оформление: Стандартное</p>
-                    <button class="btn btn-primary">Забронировать</button>
+                <div class="form-group">
+                    <label for="search-date-to">Дата торжества (по):</label>
+                    <input type="date" id="search-date-to" name="bookingDateTo">
+                </div>
+                <div class="form-group">
+                    <label for="search-status">Статус:</label>
+                    <select id="search-status" name="status">
+                        <option value="">Все</option>
+                        <option>Ожидает</option>
+                        <option>Подтверждено</option>
+                        <option>Завершено</option>
+                        <option>Отменено</option>
+                        <option>Доставлен</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="search-restaurant">Ресторан:</label>
+                    <select id="search-restaurant" name="restaurant">
+                        <option value="">Все</option>
+                    </select>
                 </div>
             </div>
-
-            <div class="pagination">
-                <button class="btn-page">Предыдущая</button>
-                <span class="page-number">1</span>
-                <span class="page-number">2</span>
-                <span class="page-number">3</span>
-                <button class="btn-page">Следующая</button>
-                <div class="annotation note-bottom">Кнопки для загрузки дополнительных страниц</div>
-            </div>
-        </section>
-
-        <section id="login" class="screen">
-            <div class="modal-window">
-                <h2>Вход в систему</h2>
-                <form class="wireframe-form">
-                    <div class="form-group">
-                        <label for="login-email">Email:</label>
-                        <input type="email" id="login-email" placeholder="user@mail.ru">
-                    </div>
-                    <div class="form-group">
-                        <label for="login-pass">Пароль:</label>
-                        <input type="password" id="login-pass">
-                    </div>
-                    <button type="button" class="btn btn-primary">Войти</button>
-                    <a href="#home" class="btn btn-secondary">Отмена</a>
-                    <p class="annotation">Link to Main Page</p>
-                </form>
-            </div>
-        </section>
-
-        <section id="booking" class="screen">
-            <h2>Оформление бронирования</h2>
-            <div class="split-layout">
-                <form class="wireframe-form form-edit">
-                    <div class="form-group">
-                        <label>ФИО клиента:</label>
-                        <input type="text" placeholder="Иванов Иван">
-                    </div>
-                    <div class="form-group">
-                        <label>Дата и время:</label>
-                        <input type="datetime-local">
-                    </div>
-                    <div class="form-group">
-                        <label>Количество человек:</label>
-                        <input type="number" value="20">
-                    </div>
-                    <div class="form-group">
-                        <label>Выбор банкетного меню (Множественный выбор):</label>
-                        <div class="checkbox-group">
-                            <label><input type="checkbox"> Салаты</label>
-                            <label><input type="checkbox"> Горячее</label>
-                            <label><input type="checkbox"> Десерты</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Способ получения:</label>
-                        <select>
-                            <option>В зале</option>
-                            <option>Доставка</option>
-                        </select>
-                    </div>
-                    <div class="action-buttons">
-                        <button type="button" class="btn btn-primary">Сохранить бронь</button>
-                        <button type="button" class="btn btn-danger" onclick="window.location.hash='#error'">Удалить / Отменить</button>
-                    </div>
-                    <div class="annotation note-right">Форма добавления/редактирования. При успехе -> Главная</div>
-                </form>
-
-                <aside class="extra-services">
-                    <h3>Доп. услуги</h3>
-                    <label><input type="checkbox"> Услуги дизайнера</label>
-                    <label><input type="checkbox"> Режиссёр (сценарий)</label>
-                    <label><input type="checkbox"> Музыкальное оформление</label>
-                    <label><input type="checkbox"> Фотограф</label>
-                    <button type="button" class="btn btn-secondary">Добавить услуги</button>
-                    <p class="annotation">Button adds services to the booking</p>
-                </aside>
-            </div>
-        </section>
-
-        <section id="courier" class="screen">
-            <h2>Панель курьера (Список доставок)</h2>
-            <div class="courier-list">
-                <div class="courier-item">
-                    <div class="order-info">
-                        <strong>Заказ #1045</strong>
-                        <p>Адрес: ул. Ленина, д. 10, кв. 5</p>
-                        <p>Статус: <span class="status in-progress">В пути</span></p>
-                    </div>
-                    <button class="btn btn-primary">Отметить "Доставлен"</button>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="search-hall">Тип зала:</label>
+                    <select id="search-hall" name="hallType">
+                        <option value="">Все</option>
+                        <option>Банкетный зал</option>
+                        <option>Летняя веранда</option>
+                        <option>VIP-зал</option>
+                    </select>
                 </div>
-                <div class="courier-item">
-                    <div class="order-info">
-                        <strong>Заказ #1046</strong>
-                        <p>Адрес: пр-т Независимости, д. 22</p>
-                        <p>Статус: <span class="status delivered">Доставлен</span></p>
-                    </div>
-                    <button class="btn btn-secondary" disabled>Доставлен</button>
+                <div class="form-group">
+                    <label for="search-decor">Оформление:</label>
+                    <select id="search-decor" name="decoration">
+                        <option value="">Все</option>
+                        <option>Стандартное</option>
+                        <option>Дизайнерское</option>
+                        <option>Тематическое</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="search-delivery">Способ получения:</label>
+                    <select id="search-delivery" name="deliveryType">
+                        <option value="">Все</option>
+                        <option>В зале</option>
+                        <option>Доставка</option>
+                    </select>
                 </div>
             </div>
-            <div class="annotation note-bottom">Курьер видит только свои заказы. Кнопка меняет статус.</div>
-        </section>
-
-        <section id="error" class="screen">
-            <div class="error-box">
-                <h1>Ошибка!</h1>
-                <p>Выбранное время бронирования менее чем через 3 дня от текущего момента.</p>
-                <p class="annotation">Альтернативный поток из Лабы 2</p>
-                <a href="#booking" class="btn btn-primary">Вернуться к исправлению</a>
-                <a href="#home" class="btn btn-secondary">На главную</a>
-            </div>
-        </section>
-
-        <section id="admin" class="screen">
-            <h2>Управление пользователями (Администратор)</h2>
-            <div class="admin-controls">
-                <button class="btn btn-primary">+ Добавить пользователя</button>
-                <button class="btn btn-secondary">Скачать отчёт по выручке</button>
-            </div>
-            <div class="user-list">
-                <div class="user-row header-row">
-                    <div>ID</div>
-                    <div>ФИО</div>
-                    <div>Роль</div>
-                    <div>Действия</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="search-guests-min">Гостей (от):</label>
+                    <input type="number" id="search-guests-min" name="guestsCountFrom" min="0">
                 </div>
-                <div class="user-row">
-                    <div>1</div>
-                    <div>Иванов И.И.</div>
-                    <div>Клиент</div>
-                    <div>
-                        <button class="btn-small">Ред.</button>
-                        <button class="btn-small btn-danger">Удал.</button>
-                    </div>
+                <div class="form-group">
+                    <label for="search-guests-max">Гостей (до):</label>
+                    <input type="number" id="search-guests-max" name="guestsCountTo" min="0">
                 </div>
-                <div class="user-row">
-                    <div>2</div>
-                    <div>Петров П.П.</div>
-                    <div>Курьер</div>
-                    <div>
-                        <button class="btn-small">Ред.</button>
-                        <button class="btn-small btn-danger">Удал.</button>
-                    </div>
+                <div class="form-group">
+                    <label for="sort-by">Сортировать по:</label>
+                    <select id="sort-by" name="sortBy">
+                        <option value="createdAt">Дате создания</option>
+                        <option value="bookingDate">Дате торжества</option>
+                        <option value="totalPrice">Стоимости</option>
+                        <option value="guestsCount">Кол-ву гостей</option>
+                        <option value="restaurant">Ресторану</option>
+                        <option value="clientName">Клиенту</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sort-order">Направление:</label>
+                    <select id="sort-order" name="sortOrder">
+                        <option value="desc">По убыванию</option>
+                        <option value="asc">По возрастанию</option>
+                    </select>
                 </div>
             </div>
-            <div class="annotation note-top">Формы редактирования и удаления пользователей</div>
-        </section>
+            <div class="action-buttons">
+                <button type="submit" class="btn btn-primary">Применить</button>
+                <button type="button" class="btn btn-secondary" id="search-reset">Сбросить</button>
+            </div>
+        </form>
 
-    </main>
+        <div class="toolbar">
+            <button type="button" class="btn btn-primary" id="create-booking-btn" hidden>+ Создать бронь</button>
+            <span class="toolbar-info" id="bookings-count"></span>
+        </div>
 
-    <footer class="app-footer">
-        <p>&copy; 2026 АИС «Организация торжеств». Все права защищены.</p>
-        <p>Контакты: +375 (29) 123-45-67 | support@torzhestva.by</p>
-    </footer>
+        <div id="bookings-list" class="results-list"></div>
+        <div id="pagination" class="pagination"></div>
+    </section>
 
+    <!-- ==================== ВХОД / РЕГИСТРАЦИЯ ==================== -->
+    <section id="login" class="screen">
+        <div class="modal-window" id="login-window">
+            <h2>Вход в систему</h2>
+            <form id="login-form" class="wireframe-form">
+                <div class="form-group">
+                    <label for="login-name">Логин:</label>
+                    <input type="text" id="login-name" name="login" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="login-pass">Пароль:</label>
+                    <input type="password" id="login-pass" name="password" required autocomplete="current-password">
+                </div>
+                <div class="action-buttons">
+                    <button type="submit" class="btn btn-primary">Войти</button>
+                    <button type="button" class="btn btn-secondary" data-nav="home">Отмена</button>
+                </div>
+                <p class="hint">
+                    Тестовые учётки: <b>admin/admin</b>, <b>client/client</b>, <b>courier/courier</b><br>
+                    Нет аккаунта? <a href="#" id="show-register">Зарегистрироваться</a>
+                </p>
+            </form>
+        </div>
+
+        <div class="modal-window" id="register-window" hidden>
+            <h2>Регистрация клиента</h2>
+            <form id="register-form" class="wireframe-form">
+                <div class="form-group">
+                    <label for="reg-login">Логин:</label>
+                    <input type="text" id="reg-login" name="login" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-pass">Пароль:</label>
+                    <input type="password" id="reg-pass" name="password" required minlength="3">
+                </div>
+                <div class="form-group">
+                    <label for="reg-fio">ФИО:</label>
+                    <input type="text" id="reg-fio" name="fio" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-phone">Телефон:</label>
+                    <input type="tel" id="reg-phone" name="phone" required placeholder="+375...">
+                </div>
+                <div class="action-buttons">
+                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                    <button type="button" class="btn btn-secondary" id="hide-register">Назад ко входу</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- ==================== ФОРМА БРОНИ ==================== -->
+    <section id="booking" class="screen">
+        <h2 id="booking-title">Оформление бронирования</h2>
+        <form id="booking-form" class="wireframe-form">
+            <input type="hidden" name="id" value="">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="booking-client">ФИО клиента:</label>
+                    <input type="text" id="booking-client" name="clientName" required>
+                </div>
+                <div class="form-group">
+                    <label for="booking-phone">Телефон:</label>
+                    <input type="tel" id="booking-phone" name="clientPhone" required placeholder="+375...">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="booking-desc">Описание:</label>
+                <textarea id="booking-desc" name="description" maxlength="199" required rows="2"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="booking-photo">Ссылка на фото (опционально):</label>
+                <input type="url" id="booking-photo" name="photoLink">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="booking-date">Дата и время (не ранее чем через 3 дня):</label>
+                    <input type="datetime-local" id="booking-date" name="bookingDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="booking-guests">Количество человек:</label>
+                    <input type="number" id="booking-guests" name="guestsCount" min="1" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="booking-restaurant">Ресторан:</label>
+                    <select id="booking-restaurant" name="restaurant">
+                        <option>Ривьера</option>
+                        <option>Времена года</option>
+                        <option>Приозёрный</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="booking-hall">Тип зала:</label>
+                    <select id="booking-hall" name="hallType">
+                        <option>Банкетный зал</option>
+                        <option>Летняя веранда</option>
+                        <option>VIP-зал</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="booking-decoration">Оформление:</label>
+                    <select id="booking-decoration" name="decoration">
+                        <option>Стандартное</option>
+                        <option>Дизайнерское</option>
+                        <option>Тематическое</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="booking-table">Номер столика:</label>
+                    <input type="number" id="booking-table" name="tableNumber" min="1">
+                </div>
+                <div class="form-group">
+                    <label for="booking-delivery">Способ получения:</label>
+                    <select id="booking-delivery" name="deliveryType">
+                        <option>В зале</option>
+                        <option>Доставка</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="booking-address">Адрес доставки:</label>
+                    <input type="text" id="booking-address" name="deliveryAddress" placeholder="если доставка">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Банкетное меню:</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="menu" value="Салаты"> Салаты</label>
+                    <label><input type="checkbox" name="menu" value="Горячее"> Горячее</label>
+                    <label><input type="checkbox" name="menu" value="Десерты"> Десерты</label>
+                    <label><input type="checkbox" name="menu" value="Напитки"> Напитки</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Доп. услуги:</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="designer"> Дизайнер</label>
+                    <label><input type="checkbox" name="director"> Режиссёр</label>
+                    <label><input type="checkbox" name="music"> Музыка</label>
+                    <label><input type="checkbox" name="photographer"> Фотограф</label>
+                </div>
+            </div>
+            <div class="form-group" id="booking-status-group" hidden>
+                <label for="booking-status">Статус (только администратор):</label>
+                <select id="booking-status" name="status">
+                    <option>Ожидает</option>
+                    <option>Подтверждено</option>
+                    <option>Завершено</option>
+                    <option>Отменено</option>
+                    <option>Доставлен</option>
+                </select>
+            </div>
+            <div class="action-buttons">
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+                <button type="button" class="btn btn-secondary" id="booking-cancel">Отмена</button>
+            </div>
+        </form>
+    </section>
+
+    <!-- ==================== КУРЬЕР ==================== -->
+    <section id="courier" class="screen">
+        <h2>Панель курьера (Список доставок)</h2>
+        <div id="courier-list" class="courier-list"></div>
+    </section>
+
+    <!-- ==================== АДМИН ==================== -->
+    <section id="admin" class="screen">
+        <h2>Управление пользователями</h2>
+        <div class="admin-controls">
+            <button type="button" class="btn btn-primary" id="admin-add-user">+ Добавить пользователя</button>
+        </div>
+        <form id="user-form" class="wireframe-form" hidden>
+            <input type="hidden" name="id" value="">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Логин:</label>
+                    <input type="text" name="login" required>
+                </div>
+                <div class="form-group">
+                    <label>Пароль:</label>
+                    <input type="text" name="password" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>ФИО:</label>
+                    <input type="text" name="fio" required>
+                </div>
+                <div class="form-group">
+                    <label>Телефон:</label>
+                    <input type="tel" name="phone">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Роль:</label>
+                    <select name="role">
+                        <option>client</option>
+                        <option>courier</option>
+                        <option>admin</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>VIP-клиент:</label>
+                    <input type="checkbox" name="isVip">
+                </div>
+                <div class="form-group">
+                    <label>Скидка, %:</label>
+                    <input type="number" name="discount" min="0" max="100" value="0">
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+                <button type="button" class="btn btn-secondary" id="user-form-cancel">Отмена</button>
+            </div>
+        </form>
+        <div id="users-list"></div>
+
+        <h2 class="mt-30">Отчёты для руководителя</h2>
+        <form id="report-form" class="wireframe-form report-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="report-from">С даты:</label>
+                    <input type="date" id="report-from" name="dateFrom">
+                </div>
+                <div class="form-group">
+                    <label for="report-to">По дату:</label>
+                    <input type="date" id="report-to" name="dateTo">
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button type="submit" class="btn btn-primary">Сформировать отчёт</button>
+            </div>
+        </form>
+        <div id="report-output"></div>
+    </section>
+
+    <!-- ==================== ОШИБКА ==================== -->
+    <section id="error" class="screen">
+        <div class="error-box">
+            <h1>Ошибка!</h1>
+            <p id="error-message">Произошла ошибка.</p>
+            <button type="button" class="btn btn-primary" data-nav="home">Вернуться на главную</button>
+        </div>
+    </section>
+
+</main>
+
+<footer class="app-footer">
+    <p>&copy; 2026 АИС «Организация торжеств». Все права защищены.</p>
+    <p>Контакты: +375 (29) 123-45-67 | support@torzhestva.by</p>
+</footer>
+
+<script src="model.js"></script>
+<script src="view.js"></script>
+<script src="controller.js"></script>
 </body>
 </html>
